@@ -20,9 +20,16 @@ const Database = () => {
   };
 
   const filterByQuery = () => {
-    let allItems = localStorageDisplay()
-      .map((item) => JSON.parse(item))
-      .filter((item) => item !== null);
+    let rawItems = localStorageDisplay();
+    let allItems = [];
+    rawItems.forEach((i) => {
+      try {
+        allItems.push(JSON.parse(i));
+      } catch (e) {
+        console.log(e);
+      }
+    });
+    allItems = allItems.filter((item) => item !== null);
 
     if (params.query === "food") {
       const filteredItems = allItems.filter((item) =>
